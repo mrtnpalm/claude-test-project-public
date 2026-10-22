@@ -32,6 +32,8 @@
     .look { border: 1px solid var(--line); border-radius: 10px; padding: 6px; text-align: center; cursor: pointer; position: relative; background: #fff; }
     .look svg { width: 100%; }
     .look span { font-size: .8rem; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    footer { border-top: 1px solid var(--line); padding: 16px; text-align: center; color: var(--muted); font-size: .85rem; }
+    footer p { margin: 0; }
     .look .del { position: absolute; top: 2px; right: 2px; border: 0; background: #fff; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; color: var(--muted); }
   </style>
 </head>
@@ -61,6 +63,10 @@
       </div>
     </section>
   </main>
+  <footer>
+    <p>© <span id="year"></span> Soengu proovija · Tehtud lõbu pärast</p>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script src="app.js"></script>
 </body>
 </html>
