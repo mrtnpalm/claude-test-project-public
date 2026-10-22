@@ -1,0 +1,18 @@
+{
+  "name": "soengu-proovija",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Proovi avatari peal erinevaid soenguid ja stiile",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node --check server.js && node --check public/app.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
+}
