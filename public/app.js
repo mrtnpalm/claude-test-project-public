@@ -205,7 +205,7 @@ document.getElementById('saved').addEventListener('click', async (e) => {
     state = { ...box._looks[card.dataset.id] };
     render();
     msg('Look laaditud.');
-    document.getElementById('avatar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('avatar').scrollIntoView({ block: 'start' });
   }
 });
 
