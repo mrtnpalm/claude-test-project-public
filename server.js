@@ -51,7 +51,11 @@ app.get('/api/looks', requireDb, async (req, res) => {
 
 app.post('/api/looks', requireDb, async (req, res) => {
   const { name, config } = req.body || {};
-  if (!config || typeof config !== 'object' || Array.isArray(config)) {
+  if (
+    !config || typeof config !== 'object' || Array.isArray(config) ||
+    !['naine', 'mees'].includes(config.gender) ||
+    JSON.stringify(config).length > 500
+  ) {
     return res.status(400).json({ error: 'Vigane look.' });
   }
   const cleanName = String(name || '').trim().slice(0, 40) || 'Nimetu look';

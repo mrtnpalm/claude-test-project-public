@@ -75,7 +75,7 @@ function renderAvatar(s) {
   const skin = SKIN[s.skin];
   const lips = s.gender === 'naine' ? '#c0505a' : '#8a4a3a';
   const lashes = s.gender === 'naine'
-    ? '<path d="M74 101 L71 98 M90 101 L93 98 M110 101 L107 98 M126 101 L129 98" stroke="#222" stroke-width="2"/>'
+    ? '<path d="M77 103 Q82 99 87 103 M77 103 L73 100 M113 103 Q118 99 123 103 M123 103 L127 100" stroke="#222" stroke-width="2" fill="none" stroke-linecap="round"/>'
     : '';
   return `<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
     <rect width="200" height="240" rx="16" fill="#efe9e2"/>
@@ -195,6 +195,7 @@ document.getElementById('saved').addEventListener('click', async (e) => {
   const box = e.currentTarget;
   const del = e.target.closest('[data-del]');
   if (del) {
+    if (!confirm('Kas kustutada see look?')) return;
     const res = await fetch(`/api/looks/${del.dataset.del}`, { method: 'DELETE' });
     msg(res.ok ? 'Look kustutatud.' : 'Kustutamine ebaõnnestus.');
     return loadLooks();
@@ -204,11 +205,15 @@ document.getElementById('saved').addEventListener('click', async (e) => {
     state = { ...box._looks[card.dataset.id] };
     render();
     msg('Look laaditud.');
+    document.getElementById('avatar').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 });
 
-document.getElementById('save').addEventListener('click', async () => {
+async function saveLook() {
   const nameInput = document.getElementById('name');
+  const button = document.getElementById('save');
+  if (button.disabled) return;
+  button.disabled = true;
   try {
     const res = await fetch('/api/looks', {
       method: 'POST',
@@ -222,7 +227,14 @@ document.getElementById('save').addEventListener('click', async () => {
     loadLooks();
   } catch (err) {
     msg(err.message || 'Salvestamine ebaõnnestus.');
+  } finally {
+    button.disabled = false;
   }
+}
+
+document.getElementById('save').addEventListener('click', saveLook);
+document.getElementById('name').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') saveLook();
 });
 
 render();
